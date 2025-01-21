@@ -1,0 +1,21 @@
+### model
+model_name_or_path: Qwen/Qwen2-VL-7B-Instruct
+
+### method
+stage: sft
+do_train: true
+finetuning_type: lora
+lora_target: all
+
+### dataset
+dataset: emma_val
+template: qwen2_vl
+cutoff_len: 2048
+#max_samples: 1000
+overwrite_cache: true
+preprocessing_num_workers: 16
+tokenized_path: saves/nus_emma_fast
+
+### output
+output_dir: saves/qwen2_vl-7b/sft
+overwrite_output_dir: true

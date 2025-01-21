@@ -1,0 +1,28 @@
+### model
+model_name_or_path: Qwen/Qwen2-VL-2B-Instruct 
+adapter_name_or_path: saves/qwen2_vl-2b/train_lora_10ep #saves/qwen2_vl-7b/train
+#adapter_name_or_path: saves/qwen2_vl-7b/train_lora_10e
+### method
+stage: sft
+do_predict: true
+finetuning_type: lora
+
+### dataset
+eval_dataset: emma_val_mini
+template: qwen2_vl
+cutoff_len: 4096
+#max_samples: 50 #TODO
+overwrite_cache: true
+preprocessing_num_workers: 16
+
+### output
+output_dir: saves/qwen2_vl-2b/xxx
+overwrite_output_dir: true
+
+### eval
+streaming: true
+max_steps: 504
+per_device_eval_batch_size: 1
+predict_with_generate: true
+ddp_timeout: 180000000
+temperature: 0.01

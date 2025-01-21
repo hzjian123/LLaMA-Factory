@@ -1,0 +1,47 @@
+### model
+model_name_or_path: Qwen/Qwen2-VL-7B-Instruct
+flash_attn: fa2
+#adapter_name_or_path: saves/qwen2_vl-7b/ablations/train_ablationV6_e20
+### method
+stage: sft
+do_train: true
+do_eval: true
+finetuning_type: lora
+lora_target: all
+### dataset
+dataset: emma_train_perception_v0 #
+template: qwen2_vl
+cutoff_len: 4096
+#max_samples: 1000
+overwrite_cache: true
+preprocessing_num_workers: 28
+image_resolution: 540000 #1200*450
+#tokenized_path: saves/nus_emma_fast #For  faster loading
+
+### output
+output_dir: saves/qwen2_vl-7b/perception/train_perception_v0 #saves/qwen2_vl-7b/ablations/train_ablationV6_e30
+logging_steps: 5
+save_steps: 2000
+plot_loss: true
+overwrite_output_dir: true
+
+### train
+per_device_train_batch_size: 8 #16
+gradient_accumulation_steps: 2
+learning_rate: 2.0e-4 #2e-4
+num_train_epochs: 10
+lr_scheduler_type: cosine
+warmup_ratio: 0.1 #0.1
+bf16: true
+ddp_timeout: 180000000
+deepspeed: examples/deepspeed/ds_z3_config.json
+
+### eval
+#val_size: 300
+eval_dataset: emma_val_single_v0_mini_share # video: mllm_video_demo
+per_device_eval_batch_size: 8
+eval_strategy: steps
+eval_steps: 100000
+
+# streaming: true
+# max_steps: 100000

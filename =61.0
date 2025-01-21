@@ -1,0 +1,6 @@
+Looking in indexes: https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple, https://pypi.ngc.nvidia.com
+Collecting setuptools
+  Downloading https://mirrors.tuna.tsinghua.edu.cn/pypi/web/packages/fe/df/88ccbee85aefbca071db004fdc8f8d2507d55d5a9dc27ebb93c92edb1bd8/setuptools-75.5.0-py3-none-any.whl (1.2 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.2/1.2 MB 10.3 MB/s eta 0:00:00
+Installing collected packages: setuptools
+Successfully installed setuptools-75.5.0

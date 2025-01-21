@@ -1,0 +1,18 @@
+### model
+model_name_or_path: Qwen/Qwen2-VL-7B-Instruct
+adapter_name_or_path: saves/qwen2_vl-7b/lora/sft
+
+### method
+finetuning_type: lora
+
+### dataset
+task: mmlu_test  # choices: [mmlu_test, ceval_validation, cmmlu_test]
+template: fewshot
+lang: en
+n_shot: 5
+
+### output
+save_dir: saves/qwen2_vl-7b/lora/eval
+
+### eval
+batch_size: 4
