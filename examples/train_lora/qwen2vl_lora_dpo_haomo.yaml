@@ -1,6 +1,6 @@
 ### model
 model_name_or_path: Qwen/Qwen2-VL-7B-Instruct
-
+flash_attn: fa2
 ### method
 stage: dpo
 do_train: true
@@ -10,22 +10,22 @@ pref_beta: 0.1
 pref_loss: sigmoid  # choices: [sigmoid (dpo), orpo, simpo]
 
 ### dataset
-dataset: rlhf_v
+dataset: emma_val_dpo_v0
 template: qwen2_vl
-cutoff_len: 2048
-max_samples: 1000
+cutoff_len: 4096
+#max_samples: 1000
 overwrite_cache: true
-preprocessing_num_workers: 16
-
+preprocessing_num_workers: 28
+image_resolution: 540000 #1200*450
 ### output
-output_dir: saves/qwen2_vl-7b/lora/dpo
+output_dir: saves/qwen2_vl-7b/dpo/train_v0
 logging_steps: 10
 save_steps: 500
 plot_loss: true
 overwrite_output_dir: true
 
 ### train
-per_device_train_batch_size: 1
+per_device_train_batch_size: 7
 gradient_accumulation_steps: 8
 learning_rate: 5.0e-6
 num_train_epochs: 3.0
@@ -33,10 +33,13 @@ lr_scheduler_type: cosine
 warmup_ratio: 0.1
 bf16: true
 ddp_timeout: 180000000
-pref_ft: 0.5
-
+enable_liger_kernel: True #TODO install in Lucas!  pip install liger-kernel
+use_unsloth_gc: True
+deepspeed: examples/deepspeed/ds_z3_config.json
+pref_ftx: 1.0
 ### eval
 val_size: 0.1
 per_device_eval_batch_size: 1
 eval_strategy: steps
 eval_steps: 500
+

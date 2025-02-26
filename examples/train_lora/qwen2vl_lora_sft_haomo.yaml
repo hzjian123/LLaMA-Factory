@@ -9,7 +9,7 @@ do_eval: true
 finetuning_type: lora
 lora_target: all
 ### dataset
-dataset: emma_train_perception_v0 #
+dataset: emma_train_single_v0_no_orient
 template: qwen2_vl
 cutoff_len: 4096
 #max_samples: 1000
@@ -19,7 +19,7 @@ image_resolution: 540000 #1200*450
 #tokenized_path: saves/nus_emma_fast #For  faster loading
 
 ### output
-output_dir: saves/qwen2_vl-7b/perception/train_perception_v0 #saves/qwen2_vl-7b/ablations/train_ablationV6_e30
+output_dir: saves/qwen2_vl-7b/single/train_single_v2 #saves/qwen2_vl-7b/ablations/train_ablationV6_e30
 logging_steps: 5
 save_steps: 2000
 plot_loss: true

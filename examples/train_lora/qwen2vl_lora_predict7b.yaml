@@ -1,7 +1,7 @@
 ### model
 model_name_or_path: Qwen/Qwen2-VL-7B-Instruct #
-#adapter_name_or_path: saves/qwen2_vl-7b/single/train_single_v1
-adapter_name_or_path: saves/qwen2_vl-7b/single/train_single_v1
+adapter_name_or_path: saves/qwen2_vl-7b/dpo/train_v0
+#adapter_name_or_path: saves/qwen2_vl-7b/single/train_single_v2
 flash_attn: fa2
 ### method
 stage: sft
@@ -9,18 +9,18 @@ do_predict: true
 finetuning_type: lora
 
 ### dataset
-eval_dataset: emma_val_single_v0_abla #emma_val_single_v0
+eval_dataset: emma_val_single_v0_mini_share #emma_train_single_v0_no_orient #emma_val_single_v0_mini_share
 template: qwen2_vl
 cutoff_len: 4096
 overwrite_cache: true
 preprocessing_num_workers: 16
 image_resolution: 540000 # pixel limit of max(hidth,height) From _preprocess_image of:  /mnt/ve_share/hezijian/LLaMA-Factory/src/llamafactory/data/mm_plugin.py
 ### output
-output_dir: saves/qwen2_vl-7b/single/predict_traj_single_v1_abla
+output_dir: saves/qwen2_vl-7b/dpo/overfit_v0 #saves/qwen2_vl-7b/single/predict_traj_single_v2_full_traindata
 overwrite_output_dir: true
 
 ### eval
-per_device_eval_batch_size: 6 #6
+per_device_eval_batch_size: 24 #12
 predict_with_generate: true
 ddp_timeout: 180000000
 temperature: 0.01

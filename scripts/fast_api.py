@@ -29,7 +29,7 @@ class VLMModel(object):
         past_traj =  str([(round(float(p[0]),2),round(float(p[1]),2)) for p in meta['past_traj']]).strip('[').strip(']')
         command = meta['command']
         timestamp = meta['timestamp']
-        print('M'*100,'Pose',pose,'Acc',accel,'Rotation',rotation_rate,'vel',vel,'cmd',command,'past_traj',past_traj,'time',timestamp)        
+        #print('M'*100,'Pose',pose,'Acc',accel,'Rotation',rotation_rate,'vel',vel,'cmd',command,'past_traj',past_traj,'time',timestamp)        
         content = "Based on navigation command:"+command+", rotation vector in the ego vehicle frame:"+pose+", acceleration vector in the ego vehicle frame in m/s/s:"+accel+", angular velocity vector of the vehicle in rad/s:"+rotation_rate+", velocity in m/s:"+vel+", historical trajectory:"+past_traj+ ",please provide the planning trajectory for the ego car without reasons."
         description = ""
         if timestamp%1==0:# scene description only
@@ -56,7 +56,7 @@ class VLMModel(object):
         #     generated_text = output.outputs[0].text
         #     return generated_text
 vlm_model = VLMModel()
-vlm_model.load_model(model_path='/mnt/ve_share/hezijian/LLaMA-Factory/models/qwen2_vl_single_v1') #'Qwen/Qwen2-VL-7B-Instruct')
+vlm_model.load_model(model_path='ckpts/qwen2_vl_single_task') #'Qwen/Qwen2-VL-7B-Instruct')
 import sklearn
 import os
 import os.path as osp
