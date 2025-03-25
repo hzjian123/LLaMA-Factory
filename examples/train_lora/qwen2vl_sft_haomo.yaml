@@ -1,0 +1,55 @@
+### model
+model_name_or_path: /share/hezijian/LLaMA-Factory/models/qwen2_vl #TODO #Qwen/Qwen2-VL-7B-Instruct
+flash_attn: fa2
+#adapter_name_or_path: saves/qwen2_vl-7b/single/train_single_v0_structured
+### method
+stage: sft
+do_train: true
+do_eval: true
+finetuning_type: lora
+lora_target: all
+### dataset
+dataset: emma_val_single_v0_structured
+template: qwen2_vl
+cutoff_len: 4096
+overwrite_cache: true
+preprocessing_num_workers: 28
+#image_resolution: 540000 #1200*450
+image_max_pixels: 540000 #TODO replace image_resolution
+#tokenized_path: saves/nus_emma_fast #For  faster loading
+
+### output
+output_dir: saves/qwen2_vl-7b/single/train_single_v0_structured_overfit
+logging_steps: 5
+save_steps: 2000
+plot_loss: true
+overwrite_output_dir: true
+
+### train
+per_device_train_batch_size: 16 #16
+gradient_accumulation_steps: 2
+learning_rate: 2.0e-4 #2e-4
+num_train_epochs: 10
+lora_dropout: 0.1 
+weight_decay: 0.01  # Add weight decay
+lr_scheduler_type: cosine
+warmup_ratio: 0.1 #0.1
+bf16: true
+ddp_timeout: 180000000
+deepspeed: examples/deepspeed/ds_z3_config.json #TODO
+additional_target: embed_tokens,lm_head #trainable part in addition to LoRA
+#save_strategy: epoch
+#load_best_model_at_end: true
+### eval
+#val_size: 300
+eval_dataset: emma_val_single_v0_mini_share 
+per_device_eval_batch_size: 8
+#eval_strategy: epoch
+eval_strategy: steps
+eval_steps: 500000
+#### data
+new_special_tokens: "<|traj_start|>,<|traj_end|>" 
+resize_vocab: true
+#skip_special_tokens: False #Output for debug
+# streaming: true
+# max_steps: 100000

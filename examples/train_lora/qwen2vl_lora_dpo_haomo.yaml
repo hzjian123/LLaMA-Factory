@@ -1,45 +1,53 @@
 ### model
-model_name_or_path: Qwen/Qwen2-VL-7B-Instruct
+model_name_or_path: /share/hezijian/LLaMA-Factory/models/qwen2_vl #Qwen/Qwen2-VL-7B-Instruct
+adapter_name_or_path: /share/hezijian/LLaMA-Factory/saves/qwen2_vl-7b/single/train_single_v2
+#adapter_name_or_path: /share/hezijian/LLaMA-Factory/saves/qwen2_vl-7b/single/train_single_v0_sft_earlystop/checkpoint-660
 flash_attn: fa2
 ### method
 stage: dpo
 do_train: true
+do_eval: true
 finetuning_type: lora
 lora_target: all
-pref_beta: 0.1
-pref_loss: sigmoid  # choices: [sigmoid (dpo), orpo, simpo]
+pref_beta: 0.4 #0.1
+pref_loss: sigmoid  #sigmoid choices: [sigmoid (dpo), orpo, simpo]
 
 ### dataset
-dataset: emma_val_dpo_v0
+dataset:  emma_train_dpo_v0
 template: qwen2_vl
-cutoff_len: 4096
+cutoff_len: 8888 #4096 
 #max_samples: 1000
 overwrite_cache: true
 preprocessing_num_workers: 28
-image_resolution: 540000 #1200*450
+#image_resolution: 540000 #1200*450
+image_max_pixels: 540000 #TODO replace image_resolution
 ### output
 output_dir: saves/qwen2_vl-7b/dpo/train_v0
 logging_steps: 10
-save_steps: 500
+save_steps: 1000
 plot_loss: true
 overwrite_output_dir: true
 
 ### train
-per_device_train_batch_size: 7
-gradient_accumulation_steps: 8
+per_device_train_batch_size: 5 #7
+gradient_accumulation_steps: 4 #2
 learning_rate: 5.0e-6
-num_train_epochs: 3.0
+num_train_epochs: 5.0 #3
 lr_scheduler_type: cosine
 warmup_ratio: 0.1
 bf16: true
 ddp_timeout: 180000000
 enable_liger_kernel: True #TODO install in Lucas!  pip install liger-kernel
 use_unsloth_gc: True
-deepspeed: examples/deepspeed/ds_z3_config.json
-pref_ftx: 1.0
+#deepspeed: examples/deepspeed/ds_z3_config.json #TODO set "stage3_prefetch_bucket_size": "auto"?
+deepspeed: examples/deepspeed/ds_z3_offload_config.json
+pref_ftx: 0.1 #0.1
 ### eval
-val_size: 0.1
-per_device_eval_batch_size: 1
-eval_strategy: steps
-eval_steps: 500
+#val_size: 0.05
+per_device_eval_batch_size: 8
+eval_dataset: emma_val_dpo_v0_mini #emma_val_single_v0_mini_share 
+#eval_strategy: steps
+save_strategy: epoch
+eval_strategy: epoch
+#eval_steps: 10
 
